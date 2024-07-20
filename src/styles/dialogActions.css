@@ -1,0 +1,14 @@
+.dialog-action-container-v {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+  }
+
+.dialog-action-container-hz {
+    display: flex;
+    flex-direction: row; /* Stack items vertically */
+  }
+  
+  .component1, .component2 {
+    /* Optional: Add styling to each component */
+    margin-bottom: 20px; /* Example margin between components */
+  }

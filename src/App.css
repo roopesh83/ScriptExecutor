@@ -36,3 +36,41 @@
     transform: rotate(360deg);
   }
 }
+
+/* .button {
+  padding: 10px 20px; 
+  background-color: #007bff; 
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+} */
+
+.editor-container {
+  display: flex;
+  justify-content: left;
+}
+
+.button-container {
+  display: flex; /* Use flexbox for horizontal alignment */
+  justify-content: center;  /* Center-align buttons horizontally */
+  /*margin-top: 20px; /* Adjust spacing as needed */
+}
+
+/* .button {
+  padding: 10px 20px; 
+  background-color: #007bff; 
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 10px; 
+} */
+
+.button:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
+
+#text1 {
+  padding: 200px
+}

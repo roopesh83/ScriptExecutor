@@ -1,24 +1,32 @@
-import logo from './logo.svg';
+
 import './App.css';
 
+// npm install react-ace ace-builds highlight.js
+import { ScriptManipulationButtons } from './components/ScriptManipulationButtons';
+import {NewScriptDialogBox} from './components/NewScriptDialogBox';
+import { NewScriptDialogBoxProvider } from './context/NewScriptDialogBoxContext';
+import {Editor} from './components/Editor'
+
+import { EditorProvider } from './context/EditorContext';
+
 function App() {
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <EditorProvider>
+        
+        <Editor/>
+        
+        <NewScriptDialogBoxProvider>
+          <ScriptManipulationButtons/>
+          <NewScriptDialogBox title={"Add new script"} dialog_text={"Enter name of script"}/>
+        </NewScriptDialogBoxProvider>
+
+      </EditorProvider>   
+       
     </div>
+    
   );
 }
 
