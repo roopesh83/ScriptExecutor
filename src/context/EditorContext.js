@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 // create context object
 export const EditorContext = createContext();
@@ -10,14 +10,7 @@ export const EditorProvider = ({ children }) => {
     const [scriptMenuState, setScriptMenuState] = useState({
         currentlySelectedMenuItem: "",
         listOfSavedScripts: [
-            {
-                "name": "script1.py",
-                "content": "hello"
-            },
-            {
-                "name": "script2.py",
-                "content": "print"
-            }
+            /** @type {{ name: string, content: string }} */
         ]
     });
 

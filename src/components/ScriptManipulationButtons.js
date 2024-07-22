@@ -10,7 +10,7 @@ export const ScriptManipulationButtons = () => {
     
 
     return (
-        <div class="button-container">
+        <div className="button-container">
             <Button onClick={() => {setOpen(!open)}}>Save script as</Button>
             <Button disabled={scriptMenuState.currentlySelectedMenuItem === ''} >Delete script</Button>
             <Button disabled={scriptMenuState.currentlySelectedMenuItem === ''} >Update script</Button>

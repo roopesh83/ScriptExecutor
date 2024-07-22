@@ -22,19 +22,19 @@ export const Editor = () => {
     return (
         <div>
 
-            <div style={{"margin-bottom": "10px", "margin-left": "10px"}} class={'dialog-action-container-hz'}>
-              <label class={scriptName === "" ? "ScriptNameLabelDisabled":"ScriptNameLabel"}>
+            <div style={{"marginBottom": "10px", "marginLeft": "10px"}} className={'dialog-action-container-hz'}>
+              <label className={scriptName === "" ? "ScriptNameLabelDisabled":"ScriptNameLabel"}>
                 {displayScriptName(scriptName)}
               </label>
 
-              <div style={{"margin-left": "auto"}}>
+              <div style={{"marginLeft": "auto"}}>
                 <ScriptMenu />
               </div>
               
             </div>
             
 
-            <div class="editor-container">
+            <div className="editor-container">
                 <AceEditor
                     onChange={setContent}
                     ref={editorRef} // Assign ref to access AceEditor instance

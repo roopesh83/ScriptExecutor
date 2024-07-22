@@ -5,6 +5,7 @@ import '../styles/dialogActions.css'
 import { EditorContext } from '../context/EditorContext';
 
 export const ScriptMenu = () => {
+    console.log('ScriptMenu component is called')
     const [selectedOption, setSelectedOption] = useState('');
     const { scriptName, setScriptName} = useContext(EditorContext);
     const { scriptMenuState, setScriptMenuState} = useContext(EditorContext)
@@ -28,21 +29,42 @@ export const ScriptMenu = () => {
         }
       }, [scriptName]);
 
+    // calling useEffect once by setting dependency array to empty array
+    useEffect(() => {
+        console.log("called useEffect in ScriptMenu.js")
+        setScriptMenuState((prevState) => (
+            {
+                ...prevState,
+                ...{
+                    listOfSavedScripts: [
+                        {
+                            "name": "script99.py",
+                            "content": "print"
+                        }
+                    ]
+                }
+            }
+        ))
+    }, [])
+
     return (
         <div>
-            <InputLabel style={{"margin-left": "auto", "margin-right": "10px"}}>Select a script</InputLabel>
+            <InputLabel style={{"marginLeft": "auto", "marginRight": "10px"}}>Select a script</InputLabel>
               
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={selectedOption}
                 // label="Select a script"
-                style={{"margin-right": "10px"}}
+                style={{"marginRight": "10px"}}
                 onChange={handleChange}>
                     <MenuItem value="">None</MenuItem>
-                    <MenuItem value="option1">Option 1</MenuItem>
-                    <MenuItem value="option2">Option 2</MenuItem>
-                    <MenuItem value="option3">Option 3</MenuItem>
+                    {
+                        // iteratively render MenuItem components
+                        scriptMenuState.listOfSavedScripts.map(script => (
+                            <MenuItem key={script.name} value={script.name}>{script.name}</MenuItem>
+                        ))
+                    }
               </Select>
         </div>
     );

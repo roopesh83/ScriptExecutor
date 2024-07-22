@@ -27,7 +27,7 @@ export const NewScriptDialogBox = ({title, dialog_text}) => {
                     <p>{dialog_text}</p>
                 </DialogContent> */}
             <DialogActions>
-            <div class={'dialog-action-container-v'}>
+            <div className={'dialog-action-container-v'}>
                 <TextField
                     id="myInput"
                     label="Enter name of script here"
@@ -37,7 +37,7 @@ export const NewScriptDialogBox = ({title, dialog_text}) => {
                     fullWidth
                     margin="normal"/>
                 
-                <div class={'dialog-action-container-hz'}>
+                <div className={'dialog-action-container-hz'}>
                     <Button onClick={handleSave} color="primary">
                         Save
                     </Button>
