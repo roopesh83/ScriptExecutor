@@ -3,23 +3,33 @@ import { InputLabel, Select, MenuItem } from '@mui/material';
 import { useState, useContext, useEffect } from 'react';
 import '../styles/dialogActions.css'
 import { EditorContext } from '../context/EditorContext';
+import axios from 'axios'
+import {fetchAllScripts} from '../api/ScriptResource'
 
 export const ScriptMenu = () => {
     console.log('ScriptMenu component is called')
     const [selectedOption, setSelectedOption] = useState('');
-    const { scriptName, setScriptName} = useContext(EditorContext);
+    const { scriptName, setScriptName, setEditorContent} = useContext(EditorContext);
     const { scriptMenuState, setScriptMenuState} = useContext(EditorContext)
 
     const handleChange = (event) => {
-        setSelectedOption(event.target.value);
-        setScriptName(event.target.value);  // set the script name based on the dropdown menu item selected
+        const menuOption = event.target.value
+        setSelectedOption(menuOption);
+        setScriptName(menuOption);  // set the script name based on the dropdown menu item selected
         setScriptMenuState(prevState => ({  // set the scriptMenuState
             ...prevState,
-            currentlySelectedMenuItem: event.target.value
+            currentlySelectedMenuItem: menuOption
         }))
+        
+        const currentScript = menuOption
+        if (currentScript === "")
+            setEditorContent("")
+        else
+            setEditorContent(scriptMenuState.mapOfSavedScripts[currentScript]?.content)
     };
 
     useEffect(() => {
+        console.log("1st useEffect called")
         if(scriptName !== selectedOption){  // due to a side effect, scriptName and selectedOption are out of sync
             setSelectedOption("")
             setScriptMenuState(prevState => ({
@@ -31,20 +41,15 @@ export const ScriptMenu = () => {
 
     // calling useEffect once by setting dependency array to empty array
     useEffect(() => {
-        console.log("called useEffect in ScriptMenu.js")
-        setScriptMenuState((prevState) => (
-            {
-                ...prevState,
-                ...{
-                    listOfSavedScripts: [
-                        {
-                            "name": "script99.py",
-                            "content": "print"
-                        }
-                    ]
-                }
+
+        fetchAllScripts().then(
+            (response) => {
+                setScriptMenuState((prevState) => ({
+                    ...prevState,
+                    mapOfSavedScripts: response.data
+              }))
             }
-        ))
+        )
     }, [])
 
     return (
@@ -61,8 +66,8 @@ export const ScriptMenu = () => {
                     <MenuItem value="">None</MenuItem>
                     {
                         // iteratively render MenuItem components
-                        scriptMenuState.listOfSavedScripts.map(script => (
-                            <MenuItem key={script.name} value={script.name}>{script.name}</MenuItem>
+                        (Object.entries(scriptMenuState.mapOfSavedScripts)).sort().map(([scriptName, v]) => (
+                             <MenuItem key={scriptName} value={scriptName}>{scriptName}</MenuItem>
                         ))
                     }
               </Select>

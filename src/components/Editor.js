@@ -14,7 +14,7 @@ const displayScriptName = (scriptName) => {
 
 export const Editor = () => {
 
-    const { setContent, scriptName} = useContext(EditorContext);
+    const { editorContents, setEditorContent, scriptName} = useContext(EditorContext);
     const editorRef = useRef(null);
 
   
@@ -36,16 +36,18 @@ export const Editor = () => {
 
             <div className="editor-container">
                 <AceEditor
-                    onChange={setContent}
+                    className={"AceEditorStyles"}
+                    onChange={setEditorContent}
                     ref={editorRef} // Assign ref to access AceEditor instance
                     mode="python"   // Specify the language mode as python
                     theme="github"  // Choose your preferred Ace theme
                     name="UNIQUE_ID_OF_DIV"
                     editorProps={{ $blockScrolling: true }}
                     width="100%"
-                    height="500px"
-                    // value="xyz"
-                    setOptions={{ useWorker: false }}/>
+                    height="60vh" // height is 60% of ViewPort
+                    value={editorContents}
+                    setOptions={{ useWorker: false }}
+                    />
             </div>
 
         </div>

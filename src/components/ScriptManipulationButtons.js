@@ -3,11 +3,15 @@ import { NewScriptDialogBoxContext } from "../context/NewScriptDialogBoxContext"
 import { useContext } from "react";
 import Button from '@mui/material/Button';
 
+
+
 export const ScriptManipulationButtons = () => {
     const { open, setOpen} = useContext(NewScriptDialogBoxContext)
     const { scriptMenuState } = useContext(EditorContext)
 
-    
+    function handleSave(){
+        setOpen(!open)
+    }
 
     return (
         <div className="button-container">
