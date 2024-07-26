@@ -46,10 +46,16 @@ export const ScriptMenu = () => {
             (response) => {
                 setScriptMenuState((prevState) => ({
                     ...prevState,
-                    mapOfSavedScripts: response.data
-              }))
+                    mapOfSavedScripts: response.data,
+                    networkError: false
+                }))
             }
-        )
+        ).catch((err) => {
+            setScriptMenuState((prevState) => ({
+                ...prevState,
+                networkError: true
+            }))
+        })
     }, [])
 
     return (

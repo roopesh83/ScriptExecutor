@@ -11,11 +11,12 @@ export const EditorProvider = ({ children }) => {
         currentlySelectedMenuItem: "",
         mapOfSavedScripts: {
             /** @type { name: string, content: string } */
-        }
+        },
+        networkError: false
     });
 
     return (
-        <EditorContext.Provider value={{editorContents, setEditorContent: setEditorContent, scriptName, setScriptName, scriptMenuState, setScriptMenuState}}>
+        <EditorContext.Provider value={{editorContents, setEditorContent, scriptName, setScriptName, scriptMenuState, setScriptMenuState}}>
             {children}
         </EditorContext.Provider>
     )

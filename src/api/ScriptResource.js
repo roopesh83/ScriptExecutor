@@ -5,7 +5,7 @@ export const fetchAllScripts = async () => {
 };
 
 export const addNewScript = async (script_name, content, created_datetime) => {
-    const response = await axios.post('http://localhost:5000/Script1', {
+    const response = await axios.post('http://localhost:5000/Script', {
         "script_name": script_name,
         "content": content,
         "created_datetime": created_datetime

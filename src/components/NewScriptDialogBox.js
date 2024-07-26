@@ -10,25 +10,35 @@ import '../styles/dialogActions.css'
 import { EditorContext } from "../context/EditorContext";
 import TextField from '@mui/material/TextField';
 
-import Typography from '@mui/material/Typography';
-import WarningIcon from '@mui/icons-material/Warning';
-
+import {Warning} from '../components/Warning'
 import {addNewScript} from '../api/ScriptResource'
 
 export const NewScriptDialogBox = ({title, dialog_text}) => {
     const {open, setOpen} = useContext(NewScriptDialogBoxContext)
-    const { editorContents,/* setEditorContent, _,*/ setScriptName} = useContext(EditorContext);
+    const { editorContents,/* setEditorContent, _,*/ setScriptName, scriptMenuState, setScriptMenuState} = useContext(EditorContext);
     
     const [ scriptNameInputValue, setScriptNameInputValue ] = useState("")
 
     const handleSave = () => {
         addNewScript(scriptNameInputValue, editorContents, '').then( (response) => {
-            console.log('add new script')
-            console.warn(response.data)
             setScriptName(scriptNameInputValue)
             setOpen(!open) 
+            setScriptMenuState((prevState) => ({
+                ...prevState,
+                mapOfSavedScripts: {
+                    ...prevState.mapOfSavedScripts,
+                    [scriptNameInputValue]: {        // adding the newly added script to mapOfSavedScripts
+                       name: scriptNameInputValue,
+                       content: editorContents
+                    }
+                },
+                networkError: false     // no network error
+            }))
         }).catch(() => {
-            console.warn("Failed to add script")
+            setScriptMenuState((prevState) => ({
+                ...prevState,
+                networkError: true      // network error
+            }))
         })
         
     }
@@ -61,10 +71,7 @@ export const NewScriptDialogBox = ({title, dialog_text}) => {
                     
                 </div>
 
-                { (scriptNameInputValue === '') && <Typography variant="body1" color="error" style={{ display: 'flex', alignItems: 'center' }}>
-                        <WarningIcon style={{ marginRight: '0.5em' }} />
-                        Script name cannot be empty
-                </Typography> }
+                { (scriptNameInputValue === '') && <Warning warningText="Script name cannot be empty"/> }
             </div>
             </DialogActions>
         </Dialog>

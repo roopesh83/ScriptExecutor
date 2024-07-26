@@ -7,6 +7,7 @@ import { EditorContext } from '../context/EditorContext';
 import { useRef, useContext } from 'react';
 import { ScriptMenu } from './ScriptMenu';
 import '../styles/EditorStyles.css'
+import NetworkError from './NetworkError';
 
 const displayScriptName = (scriptName) => {
   return scriptName === "" ? "<Script name>": scriptName;
@@ -14,7 +15,7 @@ const displayScriptName = (scriptName) => {
 
 export const Editor = () => {
 
-    const { editorContents, setEditorContent, scriptName} = useContext(EditorContext);
+    const { editorContents, setEditorContent, scriptName, scriptMenuState} = useContext(EditorContext);
     const editorRef = useRef(null);
 
   
@@ -30,7 +31,6 @@ export const Editor = () => {
               <div style={{"marginLeft": "auto"}}>
                 <ScriptMenu />
               </div>
-              
             </div>
             
 
@@ -44,12 +44,14 @@ export const Editor = () => {
                     name="UNIQUE_ID_OF_DIV"
                     editorProps={{ $blockScrolling: true }}
                     width="100%"
-                    height="60vh" // height is 60% of ViewPort
+                    height="50vh" // height is 60% of ViewPort
                     value={editorContents}
                     setOptions={{ useWorker: false }}
                     />
             </div>
-
+            
+            {scriptMenuState.networkError && <NetworkError />
+}
         </div>
     );
 }

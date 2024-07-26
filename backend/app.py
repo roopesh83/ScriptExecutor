@@ -9,10 +9,11 @@ CORS(app)
 @app.route('/Script', methods=['GET'])
 def get_scripts():
     with open('./script_store.json', 'r') as fh:
-        data = json.loads(fh.read())
+        file_contents = fh.read()
+        data = json.loads("{}" if not file_contents else file_contents)
     return data, 200
 
-@app.route('/Script1', methods=['POST'])
+@app.route('/Script', methods=['POST'])
 def add_script():
     # Get the JSON data from the request body
     data = request.get_json()
