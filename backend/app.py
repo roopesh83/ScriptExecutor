@@ -1,6 +1,8 @@
 from flask import Flask, jsonify, request
 import json
 from flask_cors import CORS
+from threading import Thread
+
 # Create a Flask application
 app = Flask(__name__)
 CORS(app)
@@ -38,6 +40,20 @@ def add_script():
         fh.write(json.dumps(script_store, indent=1))
 
     return {'message': 'Data added successfully'}, 201
+
+@app.route('/ExecScript', methods=['POST'])
+def exec_script():
+    # Get the JSON data from the request body
+    data = request.get_json()
+    print(f'executing {data.get("content")}')
+    
+    def f():
+        exec(data['content'])
+    
+    Thread(target=f).start()
+    return {}
+
+    
 
 
 # Run the application
